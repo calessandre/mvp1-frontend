@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="scripts/scripts.js"></script>
+    <title>Minhas plantas</title>
+</head>
+
+<body>
+    <!-- Cabeçalho de informações do sistema -->
+    <header>
+        <div class="faixa" style="height: 15px;"></div>
+        <div class="title"><img src="img/logo.png" height="40px"></div>
+        <div class="faixa" style="height: 10px;"></div>
+    </header>
+    
+    <!-- Opções para adicionar uma nova planta -->
+    <div class="newItem" id="formCadastro">
+        <table class="form">
+            <thead>
+                <tr class="form">
+                    <th>Nome</th>
+                    <th>Nome científico</th>
+                    <th>Quantidade</th>
+                    <th>Aquisição</th>
+                    <th>Porte</th>
+                    <th>Luminosidade</th>
+                    <th></th>
+                </tr>
+            </thead>    
+            <tbody>
+                <tr class="form">
+                    <td><input type="text" id="input_nome" value=""></td>
+                    <td><input type="text" id="input_nome_cientifico" value="teste"></td>
+                    <td><input type="text" id="input_quantidade" value="0"></td>
+                    <td>
+                        <select id="input_forma_aquisicao" style="height: 30px;">
+                            <option value="compra" selected>compra</option>
+                            <option value="doação">doação</option>
+                            <option value="muda">muda</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="input_porte" style="height: 30px;">
+                            <option value="pequena" selected>pequena</option>
+                            <option value="média">média</option>
+                            <option value="grande">grande</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="input_luminosidade" style="height: 30px;">
+                            <option value="meia sombra" selected>meia sombra</option>
+                            <option value="sol pleno">sol pleno</option>
+                            <option value="sombra">sombra</option>
+                        </select>
+                    </td>
+                    <td><span onclick="newItem()" class="addBtn">Incluir</span></td>
+                </tr>  
+            </tbody>  
+        </table>
+
+        <!--??? <input type="text" id="newPrice" placeholder="Valor"> 
+        <span onclick="newItem()" class="addBtn">Adicionar</span>-->
+    </div>
+
+    <!-- Tabela com plantas existentes -->
+    <!-- ???<section class="items"> -->
+    <div class="newItem">
+        <table id="myTable" class="tabela-itens">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Nome científico</th>
+                    <th>Quantidade</th>
+                    <th>Aquisição</th>
+                    <th>Porte</th>
+                    <th>Luminosidade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>                
+                </tr>
+            </tbody>    
+        </table>
+    </div>    
+    <!-- ??? </section> -->
+
+    <script type="text/javascript">getList();</script>
+
+</body>
+
+</html>
