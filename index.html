@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
@@ -19,57 +20,60 @@
     </header>
     
     <!-- Opções para adicionar uma nova planta -->
-    <div class="newItem" id="formCadastro">
+    <div class="item" id="formCadastro">
         <table class="form">
-            <thead>
-                <tr class="form">
-                    <th>Nome</th>
-                    <th>Nome científico</th>
-                    <th>Quantidade</th>
-                    <th>Aquisição</th>
-                    <th>Porte</th>
-                    <th>Luminosidade</th>
-                    <th></th>
-                </tr>
-            </thead>    
-            <tbody>
-                <tr class="form">
-                    <td><input type="text" id="input_nome" value="" maxlength="60"></td>
-                    <td><input type="text" id="input_nome_cientifico" value="teste" maxlength="100"></td>
-                    <td><input type="text" id="input_quantidade" value="0" size="9"></td>
-                    <td>
-                        <select id="input_forma_aquisicao" style="height: 30px;">
-                            <option value="compra" selected>compra</option>
-                            <option value="doação">doação</option>
-                            <option value="muda">muda</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select id="input_porte" style="height: 30px;">
-                            <option value="pequena" selected>pequena</option>
-                            <option value="média">média</option>
-                            <option value="grande">grande</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select id="input_luminosidade" style="height: 30px;">
-                            <option value="meia sombra" selected>meia sombra</option>
-                            <option value="sol pleno">sol pleno</option>
-                            <option value="sombra">sombra</option>
-                        </select>
-                    </td>
-                    <td><span onclick="newItem()" class="addBtn">Incluir</span></td>
-                </tr>  
-            </tbody>  
+            <tr class="form">
+                <td>Nome</td>
+                <td>Nome científico</td>
+                <td>Quantidade</td>
+                <td>Aquisição</td>
+                <td>Porte</td>
+                <td>Luminosidade</td>
+                <td></td>
+            </tr>
+            <tr class="form">
+                <td><input type="text" id="input_nome" value="" maxlength="60"></td>
+                <td><input type="text" id="input_nome_cientifico" value="teste" maxlength="100"></td>
+                <td><input type="text" id="input_quantidade" value="0" size="9"></td>
+                <td>
+                    <select id="input_forma_aquisicao" style="height: 30px;">
+                        <option value="compra" selected>compra</option>
+                        <option value="doação">doação</option>
+                        <option value="muda">muda</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="input_porte" style="height: 30px;">
+                        <option value="pequena" selected>pequena</option>
+                        <option value="média">média</option>
+                        <option value="grande">grande</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="input_luminosidade" style="height: 30px;">
+                        <option value="meia sombra" selected>meia sombra</option>
+                        <option value="sol pleno">sol pleno</option>
+                        <option value="sombra">sombra</option>
+                    </select>
+                </td>
+                <td><span onclick="newItem()" class="addBtn">Incluir</span></td>
+            </tr>
+            <tr class="form">
+                <td>
+                    Observações
+                </td>
+            </tr>    
+            <tr class="form">
+                <td colspan="6">
+                    <textarea id="input_obs" rows="3" cols="100" style="resize:none;text-align:left;">                            
+                    </textarea>
+                </td>    
+            </tr>
         </table>
-
-        <!--??? <input type="text" id="newPrice" placeholder="Valor"> 
-        <span onclick="newItem()" class="addBtn">Adicionar</span>-->
     </div>
 
-    <!-- Tabela com plantas existentes -->
-    <!-- ???<section class="items"> -->
-    <div class="newItem">
+    <!-- Cabeçalho da tabela com as plantas existentes -->
+    <div class="item">
         <table id="myTable" class="tabela-itens">
             <thead>
                 <tr>
@@ -88,8 +92,8 @@
             </tbody>    
         </table>
     </div>    
-    <!-- ??? </section> -->
-
+    
+    <!-- Carregando a lista com as plantas já presentes no banco de dados -->
     <script type="text/javascript">getList();</script>
 
 </body>

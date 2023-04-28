@@ -3,13 +3,13 @@
   Função para obter a lista de plantas existentes no servidor via requisição GET
   --------------------------------------------------------------------------------------
 */
-async function getList() {
+function getList() {
   fetch('http://127.0.0.1:5000/plantas', {
     method: 'get',
   })
     .then((response) => response.json())
     .then((data) => {
-      data.plantas.forEach(item => insertList(item.id, item.nome, item.nome_cientifico, item.porte, item.quantidade, item.forma_aquisicao, item.luminosidade));
+      data.plantas.forEach(item => insertList(item.id, item.nome, item.nome_cientifico, item.porte, item.quantidade, item.forma_aquisicao, item.luminosidade, item.observacao));
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -18,29 +18,31 @@ async function getList() {
 
 /*
   --------------------------------------------------------------------------------------
-  Função para inserir items na lista apresentada
+  Função para inserir items na lista que será apresentada
   --------------------------------------------------------------------------------------
 */
-function insertList (id, nome, nome_cientifico, porte, quantidade, forma_aquisicao, luminosidade) {
-  var item = [nome, nome_cientifico, quantidade, forma_aquisicao, porte, luminosidade];
+function insertList (id, nome, nome_cientifico, porte, quantidade, forma_aquisicao, luminosidade, obs) {
+  var item = [nome, nome_cientifico, quantidade, forma_aquisicao, porte, luminosidade, obs];
   var table = document.getElementById('myTable');
   var row = table.insertRow();
 
-  for (var i = 0; i < item.length; i++) {
+  for (var i = 0; i < item.length-1; i++) {
     var cel = row.insertCell(i);
     cel.textContent = item[i];
   }
-  insertTrashcan(row.insertCell(-1),id);
+
+  insertTrashcan(row.insertCell(-1),id, obs);
   
   clearInputs();
 }
 
 /*
   --------------------------------------------------------------------------------------
-  Função para colocar um item na lista do servidor via requisição POST
+  Função para colocar um item na base de dados via requisição POST
   --------------------------------------------------------------------------------------
 */
-async function postItem(input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade) {
+function postItem(input_nome, input_nome_cientifico, input_porte, input_quantidade, 
+                        input_forma_aquisicao, input_luminosidade, input_obs) {
   const formData = new FormData();
   formData.append('nome', input_nome);
   formData.append('nome_cientifico', input_nome_cientifico);
@@ -48,6 +50,7 @@ async function postItem(input_nome, input_nome_cientifico, input_porte, input_qu
   formData.append('forma_aquisicao', input_forma_aquisicao);
   formData.append('luminosidade', input_luminosidade);
   formData.append('quantidade', input_quantidade);
+  formData.append('observacao', input_obs);
 
   fetch('http://127.0.0.1:5000/planta', {
     method: 'post',
@@ -59,7 +62,7 @@ async function postItem(input_nome, input_nome_cientifico, input_porte, input_qu
           alert(data.message);
         }
         else{
-          insertList(data.id, input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade);
+          insertList(data.id, input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade, input_obs);
           alert("Nova planta adicionada!");      
         }  
     })
@@ -80,78 +83,57 @@ function newItem() {
   let input_forma_aquisicao = document.getElementById("input_forma_aquisicao").value;
   let input_porte = document.getElementById("input_porte").value;
   let input_luminosidade = document.getElementById("input_luminosidade").value;
+  let input_obs = document.getElementById("input_obs").value;
 
   if (input_nome === '') {
     alert("Escreva o nome da planta!");
   } else if (isNaN(input_quantidade)) {
     alert("Quantidade precisam ser numérica!");
   } else {
-    postItem(input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade);
-   // alert(id);
-   // insertList(0,input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade);
-   // alert("Nova planta adicionada!");
+    postItem(input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade, input_obs);
+    // insertList(0,input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade);
+    // alert("Nova planta adicionada!");
   }
 }
-
-//------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------
-
-/*
-  --------------------------------------------------------------------------------------
-  Chamada da função para carregamento inicial dos dados
-  --------------------------------------------------------------------------------------
-*/
-//getList()
-
-
-
-
 
 /*
   --------------------------------------------------------------------------------------
   Função para inserir uma lixeira para deleção em uma linha da tabela
   --------------------------------------------------------------------------------------
 */
-function insertTrashcan (parent, id) {
+function insertTrashcan (parent, id, obs) {
+
+  let ndiv = document.createElement("div");
+  ndiv.setAttribute("class","tooltip");
+  parent.appendChild(ndiv);
+  
   let image = document.createElement("img");
-  image.setAttribute("src","img/126468.png");
+  image.setAttribute("src","img/obs.png");
   image.setAttribute("height", "15px");
   image.setAttribute("width", "15px");
-  image.setAttribute("onclick", "removeItem(this)");
-  image.style.cursor = "pointer";
-  image.setAttribute("id", id);
-  parent.appendChild(image);
+  image.style.paddingRight = "10px";
+  ndiv.appendChild(image);
+  
+  let nspan = document.createElement("span");
+  nspan.setAttribute("class","tooltiptext");
+  nspan.innerHTML=obs;
+  ndiv.appendChild(nspan);
+  
+  let image2 = document.createElement("img");
+  image2.setAttribute("src","img/lixeira.png");
+  image2.setAttribute("height", "15px");
+  image2.setAttribute("width", "15px");
+  image2.setAttribute("onclick", "removeItem(this)");
+  image2.style.cursor = "pointer";
+  image.style.paddingLeft = "10px";
+  image2.setAttribute("id", id);
+  parent.appendChild(image2);
+
 }
 
-
 /*
   --------------------------------------------------------------------------------------
-  Função para remover um item da lista de acordo com o click no botão close
-  --------------------------------------------------------------------------------------
-*/
-/*
-const removeElement = () => {
-  let close = document.getElementsByClassName("close");
-  // var table = document.getElementById('myTable');
-  let i;
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-	  alert(this);	
-      let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
-      if (confirm("Você tem certeza?")) {
-        div.remove()
-        deleteItem(nomeItem)
-        alert("Removido!")
-      }
-    }
-  }
-}
-*/
-
-/*
-  --------------------------------------------------------------------------------------
-  Função para deletar um item da lista do servidor via requisição DELETE
+  Função para deletar um item do banco de dados via requisição DELETE
   --------------------------------------------------------------------------------------
 */
 function deleteItem (id) {
@@ -165,9 +147,6 @@ function deleteItem (id) {
       console.error('Error:', error);
     });
 }
-
-
-
 
 //------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------
@@ -186,12 +165,13 @@ function removeItem (item) {
 //------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------
 function clearInputs () {
- /* document.getElementById("input_nome").value = "";
+  document.getElementById("input_nome").value = "";
   document.getElementById("input_nome_cientifico").value = "";
   document.getElementById("input_quantidade").value = "";
   document.getElementById("input_luminosidade").value = "";
   document.getElementById("input_forma_aquisicao").value = "";
-  document.getElementById("input_porte").value = "";*/
+  document.getElementById("input_porte").value = "";
+  document.getElementById("input_obs").value = "";
 } 
 //------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------
