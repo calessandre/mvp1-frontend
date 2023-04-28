@@ -60,6 +60,7 @@ function postItem(input_nome, input_nome_cientifico, input_porte, input_quantida
     .then((data) => {
         if (typeof data.message != 'undefined'){
           alert(data.message);
+          clearInputs();
         }
         else{
           insertList(data.id, input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade, input_obs);
@@ -91,8 +92,6 @@ function newItem() {
     alert("Quantidade precisam ser numérica!");
   } else {
     postItem(input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade, input_obs);
-    // insertList(0,input_nome, input_nome_cientifico, input_porte, input_quantidade, input_forma_aquisicao, input_luminosidade);
-    // alert("Nova planta adicionada!");
   }
 }
 
@@ -156,9 +155,10 @@ function removeItem (item) {
   const nomeItem = div.getElementsByTagName('td')[0].innerHTML;
   
   if (confirm("Confirma a exclusão?")) {
-    div.remove()
-    deleteItem(item.id)
-    alert("Planta removida com sucesso!")
+    div.remove();
+    deleteItem(item.id);
+    alert("Planta removida com sucesso!");
+    clearInputs();
   }
 }
 
