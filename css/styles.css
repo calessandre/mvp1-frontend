@@ -15,7 +15,7 @@
     padding: 8px 8px;
     border-radius: 6px;
    
-    /* position do texto do tooltip */
+    /* posição do texto do tooltip */
     position: absolute;
     z-index: 1;
 }
@@ -92,7 +92,7 @@ div.faixa {
     background-image: url("../img/background.jpg");
 }
 
-/* Demais formatações */
+/* Demais formatações e estilos */
 
 input {
     padding: 6px;    
